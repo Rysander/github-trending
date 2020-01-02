@@ -87,14 +87,18 @@ def scrape(language, filename):
                     #        (title+'\n' not in lists) and \
                     #        ('framwork' not in str(pq(it).text())):
                     if title+'\n' not in lists:
-                        f.write(u"* [{title}]({url}):{description}\n{today_star}/{total_star} total stars, {total_forks} total forks.\n".format(title=title, url=url, description=description,today_star = today_star,total_star=total_star[0],total_forks=total_star[1]))
-                        f2.write(u"* [{title}]({url}):{description}\n{today_star}/{total_star} total stars, {total_forks} total forks.\n".format(title=title, url=url, description=description,today_star = today_star,total_star=total_star[0],total_forks=total_star[1]))
-                        strdate2 = datetime.datetime.now().strftime('%Y-%m')
-                        f0.write("{title}\n".format(title=title))
+                        try:
+                            f.write(u"* [{title}]({url}):{description}\n{today_star}/{total_star} total stars, {total_forks} total forks.\n".format(title=title, url=url, description=description,today_star = today_star,total_star=total_star[0],total_forks=total_star[1]))
+                            f2.write(u"* [{title}]({url}):{description}\n{today_star}/{total_star} total stars, {total_forks} total forks.\n".format(title=title, url=url, description=description,today_star = today_star,total_star=total_star[0],total_forks=total_star[1]))
+                            strdate2 = datetime.datetime.now().strftime('%Y-%m')
+                            f0.write("{title}\n".format(title=title))
+                        except:
+                            pass
             
                     # print(str(pq(it).text()),'\nKeyword matches:',True in map(lambda x:x in str(pq(it).text()),keywords),'\nNew item:',(title+'\n' not in lists),'\n\n')
     f0.close()
     f2.close()
+    git_add_commit_push(strdate2,filename2)
 
 def job():
 
